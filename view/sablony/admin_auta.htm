@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://getbootstrap.com/examples/jumbotron/ -->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Autopujcovna</title>
+        <link href="view/css/bootstrap.min.css" rel="stylesheet">
+        <link href="view/css/freelancer.css" rel="stylesheet">
+        <link href="view/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+        <link href="view/css/css.css" rel="stylesheet" type="text/css">
+    </head>
+    
+  <body class="body">
+       <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="?page=admin_auta.htm">Administrace</a>
+            </div>
+             
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="?page=admin_auta.htm">Auta</a></li>
+                    <li><a href="?page=pridat_auto.htm">Přidat auto</a></li>
+                    <li><a href="?page=admin_servisy.htm">Servisy</a></li>
+                    <li><a href="?page=admin_historie.htm">Historie</a></li>
+                    <li><a href="?page=odhlasit">Odhlásit</a></li>
+                </ul>
+            </div>
+    </div>
+      </nav>
+<div id="space"></div>
+<header>
+    <h1>Auta</h1>
+    <hr class="star-primary">    
+    <table class="heavyTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>ZNAČKA</th>
+          <th>MODEL</th>
+          <th>TYP</th>
+          <th>SPZ</th>
+          <th>BARVA</th>
+          <th>STAV TACHOMETRU</th>
+          <th>PŮJČENO</th>
+          <th>VRÁTIT</th>
+          <th>SERVIS</th>
+          <th>ODEBRAT</th>
+        </tr>
+      </thead>
+      
+    {% for auta in data %}
+		<tr>
+        	<td>{{auta['id_auta']}}</td>
+        	<td>{{auta['znacka']}}</td>
+        	<td>{{auta['model']}}</td>
+        	<td>{{auta['typ'] | raw}}</td>
+        	<td>{{auta['spz']}}</td>
+        	<td>{{auta['barva']}}</td>
+        	<td>{{auta['stav_tachometru']}} km</td>
+            <td>{{auta['pujceno']}}</td>
+            <td>
+                {% if auta['pujceno'] == 'ANO' %}
+                <form method="post">
+                <input type="hidden" name="id_auta" value="{{auta['id_auta']}}">
+                <input type="submit" name="vratit_auto" value="VRÁTIT" class="blue">
+                </form>
+                {% endif %}
+            </td>
+            <td><form method="post">
+                <input type="hidden" name="id_auta" value="{{auta['id_auta']}}">
+                <input type="submit" name="pridat_servis" value="PŘIDAT" class="green">
+                </form></td>
+            
+            <td><form method="post">
+                <input type="hidden" name="id_auta" value="{{auta['id_auta']}}">
+                <input type="submit" name="odebrat_auto" value="ODEBRAT">
+                </form></td>
+        </tr>
+	{% endfor %}
+	</table>
+ </header>
+        <nav id="zahlavi">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"></a>
+    </div>
+  </div>
+</nav>         
+</body>
