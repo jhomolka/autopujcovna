@@ -29,12 +29,15 @@
         $zakaznik = new zakaznik($db_connection);
         $servis = new servis($db_connection);
         $template_params = array();
-
+    
 
 if(isset($_GET["page"])) {
+  
+    
         /***************************************************************************************
             Sablona pro PROFIL
         */
+        $tempPom = "error.htm";
         if($_GET["page"] == "profil.htm")
         {
             $template_params["username"] = $_SESSION["username"];
@@ -45,6 +48,7 @@ if(isset($_GET["page"])) {
             
             $data = $zakaznik->zapujcenaAuta($_SESSION["username"]);
             $template_params["data"] = $data;
+            $tempPom = "profil.htm";
         }
         
         /***************************************************************************************
@@ -54,6 +58,7 @@ if(isset($_GET["page"])) {
         {
             $data = $auta->vypisVozu();
             $template_params["data"] = $data;
+            $tempPom = "prohlizeni.htm";
         }
     
         /***************************************************************************************
@@ -64,6 +69,7 @@ if(isset($_GET["page"])) {
             $data = $auta->vypisVozu();
             $template_params["data"] = $data;
             $template_params["username"] = $_SESSION["username"];
+            $tempPom = "zapujceni.htm";
         }
         
         /***************************************************************************************
@@ -72,7 +78,8 @@ if(isset($_GET["page"])) {
         if($_GET["page"] == "admin_auta.htm")
         {
             $data = $auta->vypisVsechVozu();
-            $template_params["data"] = $data;              
+            $template_params["data"] = $data; 
+            $tempPom = "admin_auta.htm";
         }
         
         /***************************************************************************************
@@ -81,7 +88,8 @@ if(isset($_GET["page"])) {
         if($_GET["page"] == "admin_historie.htm")
         {
             $data = $auta->historie();
-            $template_params["data"] = $data;              
+            $template_params["data"] = $data; 
+            $tempPom = "admin_historie.htm";
         }
     
         /***************************************************************************************
@@ -90,7 +98,8 @@ if(isset($_GET["page"])) {
         if($_GET["page"] == "admin_servisy.htm")
         {
             $data = $servis->vypisServisu();
-            $template_params["data"] = $data;              
+            $template_params["data"] = $data;
+            $tempPom = "admin_servisy.htm";
         }
         
         /***************************************************************************************
@@ -102,14 +111,38 @@ if(isset($_GET["page"])) {
         }
     
         /***************************************************************************************
-            Sablona pro KONTAKT - NEPRIHLASENEHO UZIVATELE
+            Sablona pro REGISTRACE
+        */
+        if($_GET["page"] == "registrace.htm")
+        {
+            $tempPom = "registrace.htm";
+        }
+    
+        /***************************************************************************************
+            Sablona pro PRIDANI AUTA
+        */
+        if($_GET["page"] == "login.htm")
+        {
+            $tempPom = "login.htm";
+            
+        }
+    
+        /***************************************************************************************
+            Sablona pro KONTAKT - PRIHLASENEHO UZIVATELE
         */
         if($_GET["page"] == "kontakt_prihlaseny.htm")
         {
+            $tempPom = "kontakt_prihlaseny.htm";
             $template_params["username"] = $_SESSION["username"];
         }
-
-        $tempPom = $_GET["page"];
+    
+        /***************************************************************************************
+            Sablona pro KONTAKT - NEPRIHLASENEHO UZIVATELE
+        */
+        if($_GET["page"] == "kontakt_neprihlaseny.htm")
+        {
+            $tempPom = "kontakt_neprihlaseny.htm";
+        }
         
         /***************************************************************************************
             Kliknutim na odhlasit se prejde na sablonu prihlaseni
@@ -146,6 +179,7 @@ else{
             $data = $auta->vypisVozu();
             $template_params["data"] = $data;
             $template_params["username"] = $_SESSION["username"];
+            
         }
     }
     /***************************************************************************************
@@ -306,7 +340,7 @@ if(isset($_POST['delete_user']))
     Zde se vola funkce view, do ktere vstupuje pole paramatru, ktere se 
     maji vypsat v sablone, ktera je v promenne tempPom
 */
-    $twig->view($template_params, $tempPom);
+$twig->view($template_params, $tempPom);
 
 
 ?>
