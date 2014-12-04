@@ -31,48 +31,14 @@
         $template_params = array();
     
 
+
+
 if(isset($_GET["page"])) {
-  
-    
-        /***************************************************************************************
-            Sablona pro PROFIL
-        */
         $tempPom = "error.htm";
-        if($_GET["page"] == "profil.htm")
+  
+        if(isset($_SESSION['username']) && $_SESSION['username'] == "Administrator")
         {
-            $template_params["username"] = $_SESSION["username"];
-            $info = $zakaznik->info_user($_SESSION['username']);
-            $template_params["jmeno"] = $info["jmeno"];
-            $template_params["prijmeni"] = $info["prijmeni"];
-            $template_params["bydliste"] = $info["bydliste"];
-            
-            $data = $zakaznik->zapujcenaAuta($_SESSION["username"]);
-            $template_params["data"] = $data;
-            $tempPom = "profil.htm";
-        }
-        
-        /***************************************************************************************
-            Sablona pro PROHLIZENI
-        */
-        if($_GET["page"] == "prohlizeni.htm")
-        {
-            $data = $auta->vypisVozu();
-            $template_params["data"] = $data;
-            $tempPom = "prohlizeni.htm";
-        }
-    
-        /***************************************************************************************
-            Sablona pro ZAPUJCENI
-        */
-        if($_GET["page"] == "zapujceni.htm")
-        {
-            $data = $auta->vypisVozu();
-            $template_params["data"] = $data;
-            $template_params["username"] = $_SESSION["username"];
-            $tempPom = "zapujceni.htm";
-        }
-        
-        /***************************************************************************************
+             /***************************************************************************************
             Sablona pro ADMIN AUTA
         */
         if($_GET["page"] == "admin_auta.htm")
@@ -110,6 +76,48 @@ if(isset($_GET["page"])) {
             $tempPom = "pridat_auto.htm";
         }
     
+            
+            
+                 }
+        /***************************************************************************************
+            Sablona pro PROFIL
+        */
+        
+        if($_GET["page"] == "profil.htm")
+        {
+            $template_params["username"] = $_SESSION["username"];
+            $info = $zakaznik->info_user($_SESSION['username']);
+            $template_params["jmeno"] = $info["jmeno"];
+            $template_params["prijmeni"] = $info["prijmeni"];
+            $template_params["bydliste"] = $info["bydliste"];
+            
+            $data = $zakaznik->zapujcenaAuta($_SESSION["username"]);
+            $template_params["data"] = $data;
+            $tempPom = "profil.htm";
+        }
+        
+        /***************************************************************************************
+            Sablona pro PROHLIZENI
+        */
+        if($_GET["page"] == "prohlizeni.htm")
+        {
+            $data = $auta->vypisVozu();
+            $template_params["data"] = $data;
+            $tempPom = "prohlizeni.htm";
+        }
+    
+        /***************************************************************************************
+            Sablona pro ZAPUJCENI
+        */
+        if($_GET["page"] == "zapujceni.htm")
+        {
+            $data = $auta->vypisVozu();
+            $template_params["data"] = $data;
+            $template_params["username"] = $_SESSION["username"];
+            $tempPom = "zapujceni.htm";
+        }
+        
+       
         /***************************************************************************************
             Sablona pro REGISTRACE
         */
